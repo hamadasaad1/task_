@@ -55,7 +55,7 @@ class _FeatureViewPageState extends State<FeatureViewPage> {
                 crossAxisCount: listBreakerSize,
                 crossAxisSpacing: 1,
                 mainAxisSpacing: 2,
-                childAspectRatio: 4 / 3.5,
+                childAspectRatio: 4 / 4,
               ),
               itemCount: features[i].length,
               primary: false,

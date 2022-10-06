@@ -7,7 +7,7 @@ class ExpandableText extends StatefulWidget {
   ExpandableText(this.text);
 
   final String text;
-  bool isExpanded = false;
+
 
   @override
   _ExpandableTextState createState() => _ExpandableTextState();
@@ -15,6 +15,8 @@ class ExpandableText extends StatefulWidget {
 
 class _ExpandableTextState extends State<ExpandableText>
     with TickerProviderStateMixin<ExpandableText> {
+
+  bool isExpanded = false;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,7 +27,7 @@ class _ExpandableTextState extends State<ExpandableText>
 
               duration: const Duration(milliseconds: 500),
               child: ConstrainedBox(
-                  constraints: widget.isExpanded
+                  constraints: isExpanded
                       ?const  BoxConstraints()
                       : const BoxConstraints(maxHeight: 50.0),
                   child: Text(
@@ -34,7 +36,7 @@ class _ExpandableTextState extends State<ExpandableText>
                     overflow: TextOverflow.fade,
                     style: getRegularStyle(color: ColorManager.textColor)
                   ))),
-          widget.isExpanded
+          isExpanded
               ? InkWell(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -49,7 +51,7 @@ class _ExpandableTextState extends State<ExpandableText>
                     ],
                   ),
                   onTap: () =>
-                      setState(() => widget.isExpanded = !widget.isExpanded))
+                      setState(() => isExpanded = !isExpanded))
               : InkWell(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -64,7 +66,7 @@ class _ExpandableTextState extends State<ExpandableText>
                     ],
                   ),
                   onTap: () =>
-                      setState(() => widget.isExpanded = !widget.isExpanded))
+                      setState(() => isExpanded = !isExpanded))
         ]);
   }
 }

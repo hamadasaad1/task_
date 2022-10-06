@@ -32,6 +32,7 @@ class _MainViewCubitState extends State<MainViewCubit>
 
   late TabController _tabControl;
   var searchController = TextEditingController();
+  bool isDataLoaded =false;
 
   @override
   void initState() {
@@ -50,40 +51,48 @@ class _MainViewCubitState extends State<MainViewCubit>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorManager.white,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: AppSize.s0,
-        centerTitle: true,
-        title: Text(appBarTitle,
-            style: getMediumStyle(
-                color: ColorManager.textHeaderColor, fontSize: FontSize.s18)),
-        leading: Icon(Icons.arrow_back,
-            color: ColorManager.primary, size: AppSize.s35),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: AppSize.s18),
-            child: IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.menu,
-                  color: ColorManager.primary,
-                  size: AppSize.s35,
-                )),
-          )
-        ],
-      ),
-      bottomSheet: SizedBox(
-        width: double.infinity,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: ElevatedButton(
-              onPressed: () {},
-              child: Text(
-                'Reserve',
-                style: getRegularStyle(color: ColorManager.textColor),
-              )),
-        ),
-      ),
+      appBar: !isDataLoaded
+          ? AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: AppSize.s0,
+            )
+          : AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: AppSize.s0,
+              centerTitle: true,
+              title: Text(appBarTitle,
+                  style: getMediumStyle(
+                      color: ColorManager.textHeaderColor,
+                      fontSize: FontSize.s18)),
+              leading: Icon(Icons.arrow_back,
+                  color: ColorManager.primary, size: AppSize.s35),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.only(right: AppSize.s18),
+                  child: IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.menu,
+                        color: ColorManager.primary,
+                        size: AppSize.s35,
+                      )),
+                )
+              ],
+            ),
+      bottomSheet: !isDataLoaded
+          ? const SizedBox()
+          : SizedBox(
+              width: double.infinity,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ElevatedButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Reserve',
+                      style: getRegularStyle(color: ColorManager.textColor),
+                    )),
+              ),
+            ),
       body: BlocProvider<ViewCubit>(
         create: (context) {
           _homeViewModel = ViewCubit();
@@ -97,6 +106,7 @@ class _MainViewCubitState extends State<MainViewCubit>
           listener: (context, state) {
             if (state is ViewStateSuccess) {
               getAppBarTitle(state.data.title);
+
             }
           },
           builder: (context, state) {
@@ -109,6 +119,7 @@ class _MainViewCubitState extends State<MainViewCubit>
                           ? _getContentWidget(state.data)
                           : Container(), () {
                     _homeViewModel.getData();
+                    isDataLoaded = false;
                   })) ??
                   _getContentWidget(null),
             );
@@ -121,6 +132,7 @@ class _MainViewCubitState extends State<MainViewCubit>
   void getAppBarTitle(String title) {
     setState(() {
       appBarTitle = title;
+      isDataLoaded=true;
     });
   }
 
@@ -166,39 +178,34 @@ class _MainViewCubitState extends State<MainViewCubit>
                       _buildCarouselSlider(
                           propertyData.relatedSection.relatedProperties),
                       const SizedBox(height: AppSize.s20),
- Text(
+                      Text(
                         'Facilities',
                         style: getRegularStyle(
                             color: ColorManager.textSubTitleColor,
                             fontSize: FontSize.s18),
                       ),
-
                       const SizedBox(height: AppSize.s20),
-
-                        SizedBox(
-                          
-                            height:200,
-                            child: FeatureViewPage(
-                              features: propertyData.features,
-                            )),
+                      SizedBox(
+                          height: 200,
+                          child: FeatureViewPage(
+                            features: propertyData.features,
+                          )),
                       const SizedBox(height: AppSize.s20),
                       ExpandableText(propertyData.description),
-
                       const SizedBox(height: AppSize.s20),
                       Container(
                           color: ColorManager.lightGrey,
                           height: AppSize.s1_5,
                           width: double.infinity),
-const SizedBox(height: AppSize.s20),
-                           Text(
+                      const SizedBox(height: AppSize.s20),
+                      Text(
                         'Location',
                         style: getRegularStyle(
                             color: ColorManager.textSubTitleColor,
                             fontSize: FontSize.s18),
                       ),
-
                       const SizedBox(height: AppSize.s8),
-                           Text(
+                      Text(
                         propertyData.mapSection.address,
                         style: getRegularStyle(
                             color: ColorManager.textColor,
@@ -217,44 +224,39 @@ const SizedBox(height: AppSize.s20),
   }
 
   Widget _buildRateView() {
-    return Row(children: [
-
-                      Icon(Icons.calendar_month_rounded,color: ColorManager.primary,),
-const SizedBox(width: AppSize.s4),
-                      Text(
-                      'Hotel',
-                      style: getRegularStyle(
-                          color: ColorManager.primary,
-                          fontSize: 18),
-                    ),
-                    const Spacer(),
-
-                    RatingBar.builder(
- initialRating: 3.5,
- minRating: 1,
- direction: Axis.horizontal,
- allowHalfRating: false,
- itemSize: AppSize.s28,
- itemCount: 5,
- itemPadding:const  EdgeInsets.symmetric(horizontal: 2.0),
- itemBuilder: (context, _) =>const  Icon(
-   Icons.star,
-   color: Colors.amber,
- ),
- onRatingUpdate: (rating) {
-   
- },
-),
-
-const SizedBox(width: AppSize.s4),
-
- Text(
-                      '3.5',
-                      style: getRegularStyle(
-                          color: ColorManager.primary,
-                          fontSize: 18),
-                    ),
-                    ],);
+    return Row(
+      children: [
+        Icon(
+          Icons.calendar_month_rounded,
+          color: ColorManager.primary,
+        ),
+        const SizedBox(width: AppSize.s4),
+        Text(
+          'Hotel',
+          style: getRegularStyle(color: ColorManager.primary, fontSize: 18),
+        ),
+        const Spacer(),
+        RatingBar.builder(
+          initialRating: 3.5,
+          minRating: 1,
+          direction: Axis.horizontal,
+          allowHalfRating: false,
+          itemSize: AppSize.s28,
+          itemCount: 5,
+          itemPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+          itemBuilder: (context, _) => const Icon(
+            Icons.star,
+            color: Colors.amber,
+          ),
+          onRatingUpdate: (rating) {},
+        ),
+        const SizedBox(width: AppSize.s4),
+        Text(
+          '3.5',
+          style: getRegularStyle(color: ColorManager.primary, fontSize: 18),
+        ),
+      ],
+    );
   }
 
   int currentCarouselSliderIndex = 0;
@@ -294,7 +296,6 @@ const SizedBox(width: AppSize.s4),
             );
           }).toList(),
         ),
-     
         Positioned(
           right: 0.0,
           left: 0.0,
@@ -316,24 +317,25 @@ const SizedBox(width: AppSize.s4),
             }).toList(),
           ),
         ),
-
         Positioned(
-          bottom: AppSize.s12,
-          right:AppSize.s8,
-          child: InkWell(
-            onTap: (){
- Navigator.pushNamed(context, Routes.fullImageRoute,
- arguments: {'imageUrl':relatedProperties[currentCarouselSliderIndex].featuredImage}
- );
-
-            },
-            child:  Icon(Icons.zoom_in_map_rounded,size: AppSize.s35,
-            color: ColorManager.primary,)))
+            bottom: AppSize.s12,
+            right: AppSize.s8,
+            child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(
+                      context, Routes.fullImageRoute, arguments: {
+                    'imageUrl': relatedProperties[currentCarouselSliderIndex]
+                        .featuredImage
+                  });
+                },
+                child: Icon(
+                  Icons.zoom_in_map_rounded,
+                  size: AppSize.s35,
+                  color: ColorManager.primary,
+                )))
       ],
     );
   }
-
-  
 
   Widget _buildTabView() {
     return SizedBox(
