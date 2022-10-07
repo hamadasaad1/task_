@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:task/presentation/resources/color_manager.dart';
 import 'package:task/presentation/resources/manager_values.dart';
 import 'package:task/presentation/resources/styles_manager.dart';
@@ -83,13 +84,15 @@ class _FeatureViewPageState extends State<FeatureViewPage> {
         child: Center(
           child: Column(
             children: [
-             ColorFiltered(
-             colorFilter: ColorFilter.mode(
-              feature.isActive
-                          ? ColorManager.primary
-                          : 
-              Colors.transparent, BlendMode.color),
-                child: CachedNetworkImage(
+             feature. image
+                    .endsWith('.svg')?
+                SvgPicture.network(
+                  feature.image,
+                  height: AppSize.s35,
+                  color:  feature.isActive?ColorManager.primary:ColorManager.lightGrey,
+                ):
+
+                CachedNetworkImage(
                   imageUrl: feature.image,
                   placeholder: (context, url) =>
                       Image.asset(ImagesAssets.imageLoading),
@@ -98,7 +101,7 @@ class _FeatureViewPageState extends State<FeatureViewPage> {
                   height: AppSize.s35,
                   fit: BoxFit.cover,
                 ),
-              ),
+
               const SizedBox(height: AppSize.s4),
               Text(feature.description,
                   textAlign: TextAlign.center,
