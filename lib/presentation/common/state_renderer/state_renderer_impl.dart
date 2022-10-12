@@ -89,7 +89,7 @@ extension FlowStateExtension on StateFlow {
             //show loading popup
             showPopupDialog(context, getStateRenderer(), getMessage());
 
-//show content
+            //show content
             return contentScreenWidget;
           } else {
             //full state loading screen

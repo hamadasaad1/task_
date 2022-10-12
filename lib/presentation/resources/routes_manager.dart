@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:task/presentation/resources/strings_manager.dart';
 
 import '../../app/dit.dart';

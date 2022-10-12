@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:task/presentation/resources/assets_manager.dart';
 
 import '../resources/color_manager.dart';
 import '../resources/constants_manager.dart';
