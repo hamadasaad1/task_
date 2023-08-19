@@ -23,7 +23,7 @@ jobs:
       - run:
           name: Run the script for beta Android
           command: |
-            bash scripts/prepare-flutter.sh
+ 
             bash scripts/prepare-android.sh
             bash scripts/beta-android.sh
 
