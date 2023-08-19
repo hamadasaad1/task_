@@ -1,5 +1,6 @@
 {
     "scripts": {
-        "deploy": "bash scripts/prepare.sh; bash scripts/deploy.sh"
+        "beta-ios": "bash scripts/prepare-flutter.sh;bash scripts/prepare-ios.sh;bash scripts/beta-ios.sh",
+        "beta-android": "bash scripts/prepare-flutter.sh;bash scripts/prepare-android.sh; bash scripts/beta-android.sh"
     }
 }
