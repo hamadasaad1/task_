@@ -5,8 +5,8 @@
 
 
 cd android
-chmod +x gradlew
-./gradlew clean
+# chmod +x gradlew
+# ./gradlew clean
 bundle install
 bundle exec fastlane beta_android
 cd ..
