@@ -22,11 +22,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install Ruby and Bundler
+          name: Install Bundler and Gems
           command: |
-            sudo apt-get update
-            sudo apt-get install -y ruby-full
-            gem install bundler
+            gem install bundler --user-install
+            bundle config set --local path 'vendor/bundle'
       - run:
           name: Run the script for beta Android
           command: |
