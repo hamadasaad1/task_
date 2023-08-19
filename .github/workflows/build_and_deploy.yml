@@ -1,0 +1,47 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  beta-ios:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Xcode
+        uses: actions/setup-xcode@v2
+        with:
+          xcode-version: 14.0.1
+
+      - name: Run the scripts for beta iOS
+        run: |
+          bash scripts/prepare-flutter.sh
+          bash scripts/prepare-ios.sh
+          bash scripts/beta-ios.sh
+
+  beta-android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+
+      - name: Run the scripts for beta Android
+        run: |
+          bash scripts/prepare-flutter.sh
+          bash scripts/prepare-android.sh
+          bash scripts/beta-android.sh
+
+workflows:
+  build-test-adhoc:
+    jobs:
+      - beta-android
+      # - beta-ios
