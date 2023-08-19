@@ -2,21 +2,46 @@
 # See: https://circleci.com/docs/configuration-reference
 version: 2.1
 
+orbs:
+  android: circleci/android@0.2.1
 
 jobs:
-  try-job:
+  beta-ios:
     macos:
       xcode: 14.0.1
- 
     steps:
       - checkout
-      - run : echo "I Work Fine With Circle CI"
+      - run:
+          name: Run the script for beta iOS
+          command: |
+            bash scripts/prepare-flutter.sh
+            bash scripts/prepare-ios.sh
+            bash scripts/beta-ios.sh
 
+  beta-android:
+    docker:
+      - image: circleci/android:api-30-node
+    steps:
+      - checkout
+      - run:
+          name: Run the script for beta Android
+          command: |
+            bash scripts/prepare-flutter.sh
+            bash scripts/prepare-android.sh
+            bash scripts/beta-android.sh
+
+workflows:
+  build-test-adhoc:
+    jobs:
+      - beta-android
+      # - beta-ios
 
  
 
 workflows:
   build-test-adhoc:
     jobs:
-      - try-job
+      - beta-android
+      # - beta-ios
+
 
