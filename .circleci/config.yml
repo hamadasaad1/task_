@@ -2,46 +2,25 @@
 # See: https://circleci.com/docs/configuration-reference
 version: 2.1
 
-orbs:
-  android: circleci/android@0.2.1
-
+# Define a job to be invoked later in a workflow.
+# See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
-  beta-ios:
-    macos:
-      xcode: 14.0.1
-    steps:
-      - checkout
-      - run:
-          name: Run the script for beta iOS
-          command: |
-            bash scripts/prepare-flutter.sh
-            bash scripts/prepare-ios.sh
-            bash scripts/beta-ios.sh
-
-  beta-android:
+  say-hello:
+    # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
+    # See: https://circleci.com/docs/configuration-reference/#executor-job
     docker:
-      - image: circleci/android:api-30-node
+      - image: cimg/base:stable
+    # Add steps to the job
+    # See: https://circleci.com/docs/configuration-reference/#steps
     steps:
       - checkout
       - run:
-          name: Run the script for beta Android
-          command: |
-            bash scripts/prepare-flutter.sh
-            bash scripts/prepare-android.sh
-            bash scripts/beta-android.sh
+          name: "Say hello"
+          command: "echo Hello, World!"
 
+# Orchestrate jobs using workflows
+# See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
-  build-test-adhoc:
+  say-hello-workflow:
     jobs:
-      - beta-android
-      # - beta-ios
-
- 
-
-workflows:
-  build-test-adhoc:
-    jobs:
-      - beta-android
-      # - beta-ios
-
-
+      - say-hello
