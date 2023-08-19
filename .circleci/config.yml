@@ -17,7 +17,8 @@ jobs:
 
   beta-android:
     docker:
-      - image: circleci/android:api-30-node
+      - image: cimg/android:2022.10-node
+
     steps:
       - checkout
       - run:
