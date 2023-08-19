@@ -22,6 +22,12 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install Ruby and Bundler
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y ruby-full
+            gem install bundler
+      - run:
           name: Run the script for beta Android
           command: |
  
