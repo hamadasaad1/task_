@@ -80,6 +80,7 @@ class _MainViewCubitState extends State<MainViewCubit>
               ],
             ),
 
+
       bottomSheet: !isDataLoaded
           ? const SizedBox()
           : SizedBox(
