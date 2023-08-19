@@ -1,18 +1,15 @@
-# .circleci/config.yml
 version: 2.1
+
 jobs:
-  try-job:
-    macos:
-      xcode: 14.0.1
- 
+  build:
+    docker:
+      - image: circleci/ruby:2.7.3
+
     steps:
       - checkout
-      - run : echo "I Work Fine With Circle CI"
 
-
- 
-
-workflows:
-  build-test-adhoc:
-    jobs:
-      - try-job
+      - run:
+          name: Run Custom Script
+          command: |
+            echo 'replace me with real tests!'
+            false
