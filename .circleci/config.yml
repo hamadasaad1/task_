@@ -17,7 +17,7 @@ jobs:
 
   beta-android:
     docker:
-      - image: cimg/android:2022.10-node
+      - image: cimg/android:2021.08.1
 
     steps:
       - checkout
