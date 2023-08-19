@@ -1,0 +1,18 @@
+# .circleci/config.yml
+version: 2.1
+jobs:
+  try-job:
+    macos:
+      xcode: 14.0.1
+ 
+    steps:
+      - checkout
+      - run : echo "I Work Fine With Circle CI"
+
+
+ 
+
+workflows:
+  build-test-adhoc:
+    jobs:
+      - try-job

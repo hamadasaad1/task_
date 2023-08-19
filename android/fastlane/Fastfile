@@ -1,0 +1,54 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Runs all the tests"
+  lane :test do
+    print "Fastlane tests running Successfully"
+  end
+  desc "Prepar android debug build "
+  lane:build_debud do
+    gradle(
+   task: "assembleDebug",
+
+   )
+  end
+
+
+  desc "Prepar android Release build "
+  lane:build_release do
+    gradle(
+   task: "assembleRelease",
+
+   )
+  end
+
+
+  desc "Prepare Android Release To Firebase"
+  lane :beta_android do
+    build_release  
+    firebase_app_distribution(
+      app: "1:724114304705:android:bb445e3bf7c6556f4bee40",
+      firebase_cli_token: "1//09_MFA8B50iHvCgYIARAAGAkSNwF-L9IrmouZYrUm5YjsknX1YY09IO_FHb9febBBpyxJI_olyrx24HJ61H5RKtB0afGAXwRzIaE",
+       groups: "testers",
+       release_notes: "New version release notes",
+      # debug: true,
+      android_artifact_path: "/home/ibn/Hubb/task_/build/app/outputs/apk/release/app-release.apk"
+    )
+  end
+  
+end
