@@ -21,16 +21,17 @@ jobs:
 
     steps:
       - checkout
-      - run: flutter doctor
-      - run: flutter doctor
-      - run: flutter build apk--release
+      - run:
+          name: Check Flutter Environment
+          command: flutter doctor
+
+      - run:
+          name: Build Android Release APK
+          command: flutter build apk --release
 
       - run:
           name: Run the script for beta Android
-          command: |
- 
-
-            bash scripts/beta-android.sh
+          command: bash scripts/beta-android.sh
 
 workflows:
   build-test-adhoc:
