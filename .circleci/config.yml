@@ -17,26 +17,19 @@ jobs:
 
   beta-android:
     docker:
-      - image: cimg/android:2021.08.1
+      - image: currusci/flutter
 
     steps:
       - checkout
-      - run:
-          name: Install Ruby and Bundler
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y ruby-full
-            export GEM_HOME=~/.gem
-            export PATH=$GEM_HOME/bin:$PATH
-            gem install bundler
-      - run:
-          name: Install Gems
-          command: bundle install --path vendor/bundle
+      - run: flutter doctor
+      - run: flutter doctor
+      - run: flutter build apk--release
+
       - run:
           name: Run the script for beta Android
           command: |
  
-            bash scripts/prepare-android.sh
+
             bash scripts/beta-android.sh
 
 workflows:

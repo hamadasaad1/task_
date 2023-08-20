@@ -41,7 +41,7 @@ platform :android do
 
   desc "Prepare Android Release To Firebase"
   lane :beta_android do
-    build_release  
+    # build_release  
     firebase_app_distribution(
       app: "1:724114304705:android:bb445e3bf7c6556f4bee40",
       firebase_cli_token: "1//09_MFA8B50iHvCgYIARAAGAkSNwF-L9IrmouZYrUm5YjsknX1YY09IO_FHb9febBBpyxJI_olyrx24HJ61H5RKtB0afGAXwRzIaE",
