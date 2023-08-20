@@ -61,14 +61,14 @@ android {
     }
 
    
-//         signingConfigs {
-//        release {
-//            keyAlias keystoreProperties['keyAlias']
-//            keyPassword keystoreProperties['keyPassword']
-//            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-//            storePassword keystoreProperties['storePassword']
-//        }
-//    }
+     signingConfigs {
+       release {
+            storeFile file('/home/ibn/Hubb/task_/android/app/upload-keystore.jks')
+            storePassword '1234saad'
+            keyAlias 'upload'
+            keyPassword '1234saad'
+       }
+   }
    buildTypes {
        release {
            signingConfig signingConfigs.release
