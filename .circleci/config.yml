@@ -27,6 +27,22 @@ jobs:
             flutter pub get
             flutter build apk --release
       - run:
+          name: Rename and Move APK
+          command: |
+            # Get the current date in YYYY-MM-DD format
+            CURRENT_DATE=$(date +"%Y-%m-%d")
+            # Source and destination paths
+            SOURCE_APK_PATH=/home/ibn/Hubb/task_/build/app/outputs/flutter-apk/app-release.apk
+            DESTINATION_DIR=/path/to/destination/directory
+
+            # Rename the APK file with the current date
+            RENAMED_APK_PATH=$DESTINATION_DIR/app-release-$CURRENT_DATE.apk
+            mv $SOURCE_APK_PATH $RENAMED_APK_PATH
+
+            # Print the renamed APK path
+            echo "Renamed APK path: $RENAMED_APK_PATH"      
+
+      - run:
           name: Run the script for beta Android
           command: bash scripts/beta-android.sh
 
