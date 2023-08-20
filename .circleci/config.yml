@@ -17,18 +17,15 @@ jobs:
 
   beta-android:
     docker:
-      - image: currusci/flutter
+      - image: cirrusci/flutter:latest
 
     steps:
       - checkout
       - run:
-          name: Check Flutter Environment
-          command: flutter doctor
-
-      - run:
-          name: Build Android Release APK
-          command: flutter build apk --release
-
+          name: Install Dependencies and Build APK
+          command: |
+            flutter pub get
+            flutter build apk --release
       - run:
           name: Run the script for beta Android
           command: bash scripts/beta-android.sh
